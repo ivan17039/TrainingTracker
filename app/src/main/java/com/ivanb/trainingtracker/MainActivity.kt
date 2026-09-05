@@ -4,7 +4,10 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -19,8 +22,14 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             TrainingTrackerTheme {
-                Surface(modifier = Modifier.fillMaxSize()) {
-                    WorkoutListScreen(workouts = DummyData.workouts)
+                Scaffold { innerPadding ->
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(innerPadding)
+                    ) {
+                        WorkoutListScreen()
+                    }
                 }
             }
         }
@@ -31,6 +40,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun GreetingPreview() {
     TrainingTrackerTheme {
-        WorkoutListScreen(workouts = DummyData.workouts)
+        WorkoutListScreen()
     }
 }

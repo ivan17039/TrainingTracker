@@ -28,7 +28,7 @@ fun WorkoutCard(workout: Workout, modifier: Modifier = Modifier){
                 )
             }
             Spacer(modifier = Modifier.height(4.dp))
-            Text(text = workout.dateMillis.toString(), style = MaterialTheme.typography.bodySmall)
+            Text(text = workout.date, style = MaterialTheme.typography.bodySmall)
             Spacer(modifier = Modifier.height(8.dp))
             Text(text = "${workout.exercises.size} vježbi", style = MaterialTheme.typography.bodyMedium)
         }
