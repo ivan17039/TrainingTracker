@@ -1,4 +1,4 @@
-package com.ivanb.trainingtracker
+package com.ivanb.trainingtracker.Week1
 
 object DummyData {
 
@@ -28,6 +28,12 @@ object DummyData {
             exercises = listOf(
                 Exercise("Squat", sets = 4, reps = 6, weightKg = 80.0)
             )
+        ),
+        Workout(
+            id = 4,
+            name = "Rest Day",
+            date = "01.09.2026.",
+            exercises = listOf()
         )
     )
 

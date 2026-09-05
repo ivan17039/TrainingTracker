@@ -1,4 +1,4 @@
-package com.ivanb.trainingtracker
+package com.ivanb.trainingtracker.Week1
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn

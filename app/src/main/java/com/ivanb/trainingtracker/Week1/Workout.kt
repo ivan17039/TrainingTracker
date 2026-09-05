@@ -1,4 +1,4 @@
-package com.ivanb.trainingtracker
+package com.ivanb.trainingtracker.Week1
 
 data class Workout (
     val id: Int,
