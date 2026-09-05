@@ -3,7 +3,7 @@ package com.ivanb.trainingtracker.Week1
 data class Workout (
     val id: Int,
     val name: String,
-    val date: String,
+    val dateMillis: Long,
     val exercises: List<Exercise>
 )
 
