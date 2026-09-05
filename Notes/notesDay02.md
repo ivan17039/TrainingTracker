@@ -26,7 +26,9 @@ Ne koristimo `remember` koji čak preživi rekompoziciju, ali ne preživljava da
 Testiraj: upiši nešto što ne postoji (npr. "xyz"). Lista postane prazna, ali ekran ne prikazuje nikakvu poruku – samo prazan prostor.
 
 Dodaj u `WorkoutListScreen` provjeru `if (workouts.isEmpty())` koja prikaže `Text("Nema rezultata za \"$searchQuery\"")` umjesto `LazyColumn`-a.
+
 <img src="../screenshots/EmptyListMessage.png" width="250" alt="Prazna lista poruka">
+
 ```kotlin
 if (workouts.isEmpty()) {
     Text(
