@@ -26,7 +26,7 @@ Ne koristimo `remember` koji čak preživi rekompoziciju, ali ne preživljava da
 Testiraj: upiši nešto što ne postoji (npr. "xyz"). Lista postane prazna, ali ekran ne prikazuje nikakvu poruku – samo prazan prostor.
 
 Dodaj u `WorkoutListScreen` provjeru `if (workouts.isEmpty())` koja prikaže `Text("Nema rezultata za \"$searchQuery\"")` umjesto `LazyColumn`-a.
-<img src="./screenshots/EmptyListMessage.png" width="250" alt="Prazna lista poruka">
+<img src="../screenshots/EmptyListMessage.png" width="250" alt="Prazna lista poruka">
 ```kotlin
 if (workouts.isEmpty()) {
     Text(
@@ -50,7 +50,7 @@ if (workouts.isEmpty()) {
 ### 2. Dodavanje ikone za brisanje (trailingIcon)
 
 Dodaj `trailingIcon` na `TextField` (npr. malo "x") koji poziva `viewModel.onSearchQueryChange("")` i briše upit.
-<img src="./screenshots/TrailingIcon.png" width="250" alt="Ikona za brisanje unesenog teksta">
+<img src="../screenshots/TrailingIcon.png" width="250" alt="Ikona za brisanje unesenog teksta">
 ```kotlin
 trailingIcon = {
     // Prikaži gumb za brisanje samo ako ima unesenog teksta

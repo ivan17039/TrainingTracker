@@ -52,7 +52,7 @@ Row(verticalAlignment = Alignment.CenterVertically) {
 
 ### 3. Zamijeni `Modifier.padding(horizontal = 16.dp, vertical = 8.dp)` u `WorkoutCard`-u s `Modifier.background(Color.LightGray).padding(16.dp)`, pa onda obrnutim redoslijedom (padding pa background) — usporedi vizualnu razliku i zapiši svojim riječima zašto se razlikuju.
 
-<img src="./screenshots/ModifierOrderDifferences.png" width="250" alt="Razlike u redoslijedu kod modifier-a">
+<img src="../screenshots/ModifierOrderDifferences.png" width="250" alt="Razlike u redoslijedu kod modifier-a">
 
 * **Prije `background()`:** Djeluje kao vanjski razmak (margin). Imamo smanjeni prostor za crtanje jer se prvo kartica odmakne pa se pozadina postavlja.
 * **Poslije `background()`:** Djeluje kao unutarnji razmak (padding). Imamo sivu pozadinu i onda se unutar toga kartica odmakne.
