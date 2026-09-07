@@ -1,5 +1,6 @@
 package com.ivanb.trainingtracker.Week1
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,6 +22,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun WorkoutListScreen(
+    onWorkoutClick: (Int) -> Unit,
     viewModel: WorkoutListViewModel = viewModel(),
     modifier: Modifier = Modifier
 ) {
@@ -54,8 +56,10 @@ fun WorkoutListScreen(
         } else{
             LazyColumn(modifier = Modifier.fillMaxSize()) {
                 items(workouts) { workout ->
-                    WorkoutCard(workout = workout)
-
+                    WorkoutCard(
+                        workout = workout,
+                        modifier = Modifier.clickable { onWorkoutClick(workout.id) }
+                    )
                 }
             }
         }
