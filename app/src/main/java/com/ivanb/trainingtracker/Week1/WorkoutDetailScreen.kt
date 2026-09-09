@@ -18,20 +18,35 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun WorkoutDetailScreen(workoutId: Int, onBack: () -> Unit, onEditClick: (Int) ->Unit) {
-    val workout = remember(workoutId) { DummyData.workouts.find { it.id == workoutId } }
+fun WorkoutDetailScreen(
+    workoutId: Int,
+    onBack: () -> Unit,
+    onEditClick: (Int) ->Unit,
+    viewModel: WorkoutDetailViewModel = viewModel()
+){
+    val workout by viewModel.workout.collectAsState()
+
+    LaunchedEffect(workoutId) {
+        viewModel.loadWorkout(workoutId)
+    }
+
+    val currentWorkout = workout
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(workout?.name ?: "Trening") },
+                title = { Text(currentWorkout?.name ?: "Trening") },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Natrag")
@@ -40,7 +55,7 @@ fun WorkoutDetailScreen(workoutId: Int, onBack: () -> Unit, onEditClick: (Int) -
             )
         }
     ) { padding ->
-        if (workout == null) {
+        if (currentWorkout == null) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -51,7 +66,7 @@ fun WorkoutDetailScreen(workoutId: Int, onBack: () -> Unit, onEditClick: (Int) -
             }
         } else {
             // workout nije null → sad gledamo ima li vježbi
-            if (workout.exercises.isEmpty()) {
+            if (currentWorkout.exercises.isEmpty()) {
                 // NEMA vježbi → prikaži samo poruku, BEZ LazyColumn
                 Box(
                     modifier = Modifier
@@ -68,7 +83,7 @@ fun WorkoutDetailScreen(workoutId: Int, onBack: () -> Unit, onEditClick: (Int) -
                         .fillMaxSize()
                         .padding(padding)
                 ) {
-                    items(workout.exercises) { exercise ->
+                    items(currentWorkout.exercises) { exercise ->
                         Column(
                             modifier = Modifier
                                 .fillMaxWidth()

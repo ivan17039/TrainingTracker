@@ -24,8 +24,9 @@ import com.ivanb.trainingtracker.Week1.WorkoutEditScreen
 import com.ivanb.trainingtracker.Week1.WorkoutList
 import com.ivanb.trainingtracker.Week1.WorkoutListScreen
 import com.ivanb.trainingtracker.ui.theme.TrainingTrackerTheme
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.Map.entry
-
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
