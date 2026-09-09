@@ -12,4 +12,6 @@ class WorkoutRepository @Inject constructor() {
     fun getWorkoutById(id: Int): Workout? {
         return DummyData.workouts.find { it.id == id }
     }
+
+    fun getWorkoutCount(): Int = DummyData.workouts.size
 }
