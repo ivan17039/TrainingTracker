@@ -17,6 +17,8 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
 import com.ivanb.trainingtracker.Week1.DummyData
 import com.ivanb.trainingtracker.Week1.NavigationViewModel
+import com.ivanb.trainingtracker.Week1.WorkoutCreate
+import com.ivanb.trainingtracker.Week1.WorkoutCreateScreen
 import com.ivanb.trainingtracker.Week1.WorkoutDetail
 import com.ivanb.trainingtracker.Week1.WorkoutDetailScreen
 import com.ivanb.trainingtracker.Week1.WorkoutEdit
@@ -56,7 +58,8 @@ fun TrainingTrackerApp(navViewModel: NavigationViewModel = viewModel()) {
         entryProvider = entryProvider {
             entry<WorkoutList> {
                 WorkoutListScreen(
-                    onWorkoutClick = { id -> backStack.add(WorkoutDetail(id)) }
+                    onWorkoutClick = { id -> backStack.add(WorkoutDetail(id)) },
+                    onAddClick = {backStack.add(WorkoutCreate)}
                 )
             }
             entry<WorkoutDetail> { key ->
@@ -71,6 +74,10 @@ fun TrainingTrackerApp(navViewModel: NavigationViewModel = viewModel()) {
                     workoutId = key.workoutId,
                     onBack = { backStack.removeLastOrNull() }
                 )
+            }
+            entry<WorkoutCreate> {
+                WorkoutCreateScreen(onBack = { backStack.removeLastOrNull() },
+                    onSaved = { backStack.removeLastOrNull() })
             }
         }
     )

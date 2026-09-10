@@ -8,9 +8,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -23,43 +26,55 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 @Composable
 fun WorkoutListScreen(
     onWorkoutClick: (Int) -> Unit,
+    onAddClick: () -> Unit,
     viewModel: WorkoutListViewModel = viewModel(),
     modifier: Modifier = Modifier
 ) {
     val workouts by viewModel.workouts.collectAsState()
     val searchQuery by viewModel.searchQuery.collectAsState()
 
-    Column(modifier = modifier.fillMaxSize()) {
-        TextField(
-            value = searchQuery,
-            onValueChange = viewModel::onSearchQueryChange,
-            label = { Text("Pretraži treninge") },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            singleLine = true,
-            trailingIcon = {
-                // Prikaži gumb za brisanje samo ako ima unesenog teksta
-                if (searchQuery.isNotEmpty()) {
-                    IconButton(onClick = { viewModel.onSearchQueryChange("") }) {
-                        Icon(
-                            imageVector = Icons.Default.Clear, // Ikona iksa ("x")
-                            contentDescription = "Očisti pretragu"
-                        )
+    Scaffold(
+        floatingActionButton = {
+            FloatingActionButton(onClick = onAddClick) {
+                Icon(Icons.Default.Add, contentDescription = "Dodaj trening")
+            }
+        }
+    ) { padding ->
+        Column(modifier = modifier.fillMaxSize()) {
+            TextField(
+                value = searchQuery,
+                onValueChange = viewModel::onSearchQueryChange,
+                label = { Text("Pretraži treninge") },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                singleLine = true,
+                trailingIcon = {
+                    // Prikaži gumb za brisanje samo ako ima unesenog teksta
+                    if (searchQuery.isNotEmpty()) {
+                        IconButton(onClick = { viewModel.onSearchQueryChange("") }) {
+                            Icon(
+                                imageVector = Icons.Default.Clear, // Ikona iksa ("x")
+                                contentDescription = "Očisti pretragu"
+                            )
+                        }
                     }
                 }
-            }
-        )
-        if(workouts.isEmpty()){
-            Text(text = "Nema rezultata za \"$searchQuery\"",modifier = Modifier.padding(16.dp))
+            )
+            if (workouts.isEmpty()) {
+                Text(
+                    text = "Nema rezultata za \"$searchQuery\"",
+                    modifier = Modifier.padding(16.dp)
+                )
 
-        } else{
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(workouts) { workout ->
-                    WorkoutCard(
-                        workout = workout,
-                        modifier = Modifier.clickable { onWorkoutClick(workout.id) }
-                    )
+            } else {
+                LazyColumn(modifier = Modifier.fillMaxSize()) {
+                    items(workouts) { workout ->
+                        WorkoutCard(
+                            workout = workout,
+                            modifier = Modifier.clickable { onWorkoutClick(workout.id) }
+                        )
+                    }
                 }
             }
         }
