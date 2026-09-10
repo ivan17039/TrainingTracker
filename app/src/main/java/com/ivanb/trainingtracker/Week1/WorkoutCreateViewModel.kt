@@ -31,6 +31,10 @@ class WorkoutCreateViewModel @Inject constructor(
             _nameError.value = "Ime treninga je obavezno"
             return
         }
+        if(trimmed.length > 40){
+            _nameError.value = "Ime je predugo (max 40 znakova)"
+            return
+        }
         repository.addWorkout(
             Workout(
                 id = repository.nextId(),
