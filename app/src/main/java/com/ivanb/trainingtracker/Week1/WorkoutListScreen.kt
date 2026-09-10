@@ -19,6 +19,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -33,46 +34,83 @@ fun WorkoutListScreen(
     val workouts by viewModel.workouts.collectAsState()
     val searchQuery by viewModel.searchQuery.collectAsState()
 
+    val filteredWorkouts = remember(workouts, searchQuery) {
+        if (searchQuery.isBlank()) {
+            workouts
+        } else {
+            workouts.filter { workout ->
+                workout.name.contains(
+                    other = searchQuery,
+                    ignoreCase = true
+                )
+            }
+        }
+    }
+
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(onClick = onAddClick) {
-                Icon(Icons.Default.Add, contentDescription = "Dodaj trening")
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = "Dodaj trening"
+                )
             }
         }
     ) { padding ->
-        Column(modifier = modifier.fillMaxSize()) {
+
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(padding)
+        ) {
             TextField(
                 value = searchQuery,
                 onValueChange = viewModel::onSearchQueryChange,
-                label = { Text("Pretraži treninge") },
+                label = {
+                    Text("Pretraži treninge")
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
                 singleLine = true,
                 trailingIcon = {
-                    // Prikaži gumb za brisanje samo ako ima unesenog teksta
                     if (searchQuery.isNotEmpty()) {
-                        IconButton(onClick = { viewModel.onSearchQueryChange("") }) {
+                        IconButton(
+                            onClick = {
+                                viewModel.onSearchQueryChange("")
+                            }
+                        ) {
                             Icon(
-                                imageVector = Icons.Default.Clear, // Ikona iksa ("x")
+                                imageVector = Icons.Default.Clear,
                                 contentDescription = "Očisti pretragu"
                             )
                         }
                     }
                 }
             )
-            if (workouts.isEmpty()) {
+
+            if (filteredWorkouts.isEmpty()) {
                 Text(
-                    text = "Nema rezultata za \"$searchQuery\"",
+                    text = if (searchQuery.isBlank()) {
+                        "Nema treninga"
+                    } else {
+                        "Nema rezultata za \"$searchQuery\""
+                    },
                     modifier = Modifier.padding(16.dp)
                 )
-
             } else {
-                LazyColumn(modifier = Modifier.fillMaxSize()) {
-                    items(workouts) { workout ->
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    items(
+                        items = filteredWorkouts,
+                        key = { workout -> workout.id }
+                    ) { workout ->
                         WorkoutCard(
                             workout = workout,
-                            modifier = Modifier.clickable { onWorkoutClick(workout.id) }
+                            modifier = Modifier.clickable {
+                                onWorkoutClick(workout.id)
+                            }
                         )
                     }
                 }
