@@ -1,10 +1,14 @@
 package com.ivanb.trainingtracker.Week1
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "workouts")
 data class Workout (
-    val id: Int,
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val name: String,
     val dateMillis: Long = System.currentTimeMillis(),
-    val exercises: List<Exercise>
+    val exercises: List<Exercise> = emptyList()
 )
 
 data class Exercise(

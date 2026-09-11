@@ -1,10 +1,12 @@
 package com.ivanb.trainingtracker.Week1
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -31,18 +33,14 @@ class WorkoutCreateViewModel @Inject constructor(
             _nameError.value = "Ime treninga je obavezno"
             return
         }
-        if(trimmed.length > 40){
-            _nameError.value = "Ime je predugo (max 40 znakova)"
-            return
-        }
-        repository.addWorkout(
-            Workout(
-                id = repository.nextId(),
-                name = trimmed,
-                dateMillis = System.currentTimeMillis(),
-                exercises = emptyList()
+        viewModelScope.launch {
+            repository.addWorkout(
+                Workout(
+                    name = trimmed,
+                    dateMillis = System.currentTimeMillis()
+                )
             )
-        )
-        onSaved()
+            onSaved()
+        }
     }
 }

@@ -59,4 +59,8 @@ dependencies {
     implementation("androidx.navigation3:navigation3-ui:1.1.7")
     implementation("com.google.dagger:hilt-android:2.59.2")
     ksp("com.google.dagger:hilt-compiler:2.59.2")
+    implementation("androidx.room:room-runtime:2.8.4")
+    implementation("androidx.room:room-ktx:2.8.4")
+    ksp("androidx.room:room-compiler:2.8.4")
+    implementation("com.google.code.gson:gson:2.11.0")
 }
