@@ -55,7 +55,11 @@ A few deliberate decisions worth calling out:
 
 ## Screenshots
 
-*(add a few device/emulator screenshots here)*
+<img src="./screenshots/EditButton.png" width="250" alt="Screen of workouts">
+
+<img src="./screenshots/AddNewTrainingAndSearch.png" width="250" alt="Add new training and search">
+
+<img src="./screenshots/RoomDataNoInternet.png" width="250" alt="Room podaci bez interneta">
 
 ## Getting Started
 
