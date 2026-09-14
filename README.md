@@ -55,11 +55,9 @@ A few deliberate decisions worth calling out:
 
 ## Screenshots
 
-<img src="./screenshots/EditButton.png" width="250" alt="Screen of workouts">
-
-<img src="./screenshots/AddNewTrainingAndSearch.png" width="250" alt="Add new training and search">
-
-<img src="./screenshots/RoomDataNoInternet.png" width="250" alt="Room podaci bez interneta">
+| Workouts | Add & Search | Offline |
+|:---:|:---:|:---:|
+| <img src="screenshots/EditButton.png" width="180px" alt="Screen of workouts" /> | <img src="screenshots/AddNewTrainingAndSearch.png" width="180px" alt="Add new training and search" /> | <img src="screenshots/RoomDataNoInternet.png" width="180px" alt="Room data without internet" /> |
 
 ## Getting Started
 
