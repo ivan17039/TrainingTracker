@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class WorkoutCreateViewModel @Inject constructor(
+class WorkoutFormViewModel @Inject constructor(
     private val repository: WorkoutRepository
 ) : ViewModel() {
 
@@ -20,6 +20,15 @@ class WorkoutCreateViewModel @Inject constructor(
     private val _nameError = MutableStateFlow<String?>(null)
     val nameError: StateFlow<String?> = _nameError.asStateFlow()
 
+    private var editingWorkout: Workout ? = null
+
+    fun loadForEdit(workoutId: Int) {
+        viewModelScope.launch {
+            val workout = repository.getWorkoutById(workoutId)
+            editingWorkout = workout
+            _name.value = workout?.name ?: ""
+        }
+    }
     fun onNameChange(newName: String) {
         _name.value = newName
         if (_nameError.value != null) {
@@ -34,12 +43,17 @@ class WorkoutCreateViewModel @Inject constructor(
             return
         }
         viewModelScope.launch {
+            val existing = editingWorkout
+            if(existing!=null){
+                repository.addWorkout(existing.copy(name = trimmed))
+            } else{
             repository.addWorkout(
                 Workout(
                     name = trimmed,
                     dateMillis = System.currentTimeMillis()
                 )
             )
+            }
             onSaved()
         }
     }

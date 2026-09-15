@@ -17,8 +17,8 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
 import com.ivanb.trainingtracker.Week1.DummyData
 import com.ivanb.trainingtracker.Week1.NavigationViewModel
-import com.ivanb.trainingtracker.Week1.WorkoutCreate
-import com.ivanb.trainingtracker.Week1.WorkoutCreateScreen
+import com.ivanb.trainingtracker.Week1.WorkoutForm
+import com.ivanb.trainingtracker.Week1.WorkoutFormScreen
 import com.ivanb.trainingtracker.Week1.WorkoutDetail
 import com.ivanb.trainingtracker.Week1.WorkoutDetailScreen
 import com.ivanb.trainingtracker.Week1.WorkoutEdit
@@ -59,25 +59,23 @@ fun TrainingTrackerApp(navViewModel: NavigationViewModel = viewModel()) {
             entry<WorkoutList> {
                 WorkoutListScreen(
                     onWorkoutClick = { id -> backStack.add(WorkoutDetail(id)) },
-                    onAddClick = {backStack.add(WorkoutCreate)}
+                    onAddClick = {backStack.add(WorkoutForm())}
                 )
             }
             entry<WorkoutDetail> { key ->
                 WorkoutDetailScreen(
                     workoutId = key.workoutId,
                     onBack = { backStack.removeLastOrNull() },
-                    onEditClick = { id -> backStack.add(WorkoutEdit(id)) }
+                    onEditClick = { id -> backStack.add(WorkoutForm(id)) }
                 )
             }
-            entry<WorkoutEdit> { key ->
-                WorkoutEditScreen(
+
+            entry<WorkoutForm> { key ->
+                WorkoutFormScreen(
                     workoutId = key.workoutId,
-                    onBack = { backStack.removeLastOrNull() }
+                    onBack = { backStack.removeLastOrNull() },
+                    onSaved = { backStack.removeLastOrNull() }
                 )
-            }
-            entry<WorkoutCreate> {
-                WorkoutCreateScreen(onBack = { backStack.removeLastOrNull() },
-                    onSaved = { backStack.removeLastOrNull() })
             }
         }
     )

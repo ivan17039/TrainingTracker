@@ -23,4 +23,8 @@ class WorkoutRepository @Inject constructor(
             workoutDao.insertAll(DummyData.workouts)
         }
     }
+
+    suspend fun deleteWorkout(id: Int){
+        workoutDao.deleteById(id)
+    }
 }

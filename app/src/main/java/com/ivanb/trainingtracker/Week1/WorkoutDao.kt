@@ -22,4 +22,7 @@ interface WorkoutDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(workouts: List<Workout>)
+
+    @Query("DELETE FROM workouts WHERE id = :id")
+    suspend fun deleteById(id: Int)
 }

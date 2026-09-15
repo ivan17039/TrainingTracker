@@ -17,6 +17,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -25,18 +26,25 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun WorkoutCreateScreen(
+fun WorkoutFormScreen(
+    workoutId: Int?,
     onBack: () -> Unit,
     onSaved: () -> Unit,
-    viewModel: WorkoutCreateViewModel = viewModel()
+    viewModel: WorkoutFormViewModel = viewModel()
 ) {
     val name by viewModel.name.collectAsState()
     val nameError by viewModel.nameError.collectAsState()
 
+    LaunchedEffect(workoutId) {
+        if (workoutId != null) {
+            viewModel.loadForEdit(workoutId)
+        }
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Novi trening") },
+                title = { Text(if(workoutId == null) "Novi trening" else "Uredi trening") },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Natrag")
