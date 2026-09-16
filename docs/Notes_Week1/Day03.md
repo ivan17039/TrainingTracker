@@ -76,7 +76,7 @@ Kad se lista promijeni, `mutableStateListOf` detektira promjenu, `NavDisplay` se
 
 Klikni na "Rest Day" (0 vježbi) – detail ekran bi trebao prikazati prazan prostor bez pucanja. Dodaj `if (workout.exercises.isEmpty())` unutar `else` grane koja prikaže `Text("Nema unesenih vježbi.")` umjesto prazne `LazyColumn`.
 
-![Prikaz detalja za dan odmora](../screenshots/RestDayScreen.png){width=250}
+![Prikaz detalja za dan odmora](../../screenshots/RestDayScreen.png){width=250}
 
 ---
 
@@ -108,6 +108,6 @@ I strelica u appu i sistemska back tipka rade identično s obzirom na to koji se
 
 Dodaj treći ključ i ekran po želji (npr. `WorkoutEdit(val workoutId: Int)` s praznim placeholder ekranom `Text("Uskoro: uređivanje")`) – samo da uvježbaš dodavanje trećeg ključa u `entryProvider` bez da razmišljaš o punoj funkcionalnosti.
 
-![Gumb za uređivanje](../screenshots/EditButton.png){width=250}
+![Gumb za uređivanje](../../screenshots/EditButton.png){width=250}
 
-![Prikaz ekrana uređivanja](../screenshots/WorkoutEditScreen.png){width=250}
+![Prikaz ekrana uređivanja](../../screenshots/WorkoutEditScreen.png){width=250}

@@ -31,7 +31,7 @@ Danas se to mijenja u `StateFlow` svojstvo koje se može promatrati i koje javlj
 
 Dodaj 2–3 nova treninga preko forme. Provjeri da ih polje za pretraživanje odmah pronalazi tako da upišeš dio imena treninga koji si upravo dodao.
 
-<img src="../screenshots/AddNewTrainingAndSearch.png" width="250" alt="Dodavanje novog treninga i pretraživanje istog">
+<img src="../../screenshots/AddNewTrainingAndSearch.png" width="250" alt="Dodavanje novog treninga i pretraživanje istog">
 
 ### 2. Testiranje praznog naziva
 
@@ -39,7 +39,7 @@ Testiraj rubni slučaj: upiši samo razmake, na primjer tri puta pritisni razmak
 
 Treba li se pojaviti greška? Provjeri ponašanje — radi li `trim()` u `WorkoutCreateViewModel` svoje?
 
-<img src="../screenshots/BlankTrainingName.png" width="250" alt="Dodavanje praznog naziva treninga">
+<img src="../../screenshots/BlankTrainingName.png" width="250" alt="Dodavanje praznog naziva treninga">
 
 ### 3. Zašto je Repository postao `@Singleton`?
 
@@ -65,4 +65,4 @@ _nameError.value = "Ime je predugo (max 40 znakova)"
 
 umjesto spremanja treninga.
 
-<img src="../screenshots/LongTrainingName.png" width="250" alt="Predugo ime za trening">
+<img src="../../screenshots/LongTrainingName.png" width="250" alt="Predugo ime za trening">

@@ -27,7 +27,7 @@ Testiraj: upiši nešto što ne postoji (npr. "xyz"). Lista postane prazna, ali 
 
 Dodaj u `WorkoutListScreen` provjeru `if (workouts.isEmpty())` koja prikaže `Text("Nema rezultata za \"$searchQuery\"")` umjesto `LazyColumn`-a.
 
-<img src="../screenshots/EmptyListMessage.png" width="250" alt="Prazna lista poruka">
+<img src="../../screenshots/EmptyListMessage.png" width="250" alt="Prazna lista poruka">
 
 ```kotlin
 if (workouts.isEmpty()) {

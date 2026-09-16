@@ -125,8 +125,8 @@ Zatim:
 3. Provjeri je li novo ime ostalo spremljeno.
 
 <p align="center">
-  <img src="../screenshots/BeforeEditWorkout.png" width="250" alt="Trening prije uređivanja">
-  <img src="../screenshots/AfterEditWorkout.png" width="250" alt="Trening nakon uređivanja">
+  <img src="../../screenshots/BeforeEditWorkout.png" width="250" alt="Trening prije uređivanja">
+  <img src="../../screenshots/AfterEditWorkout.png" width="250" alt="Trening nakon uređivanja">
 </p>
 
 ### 2. Obriši trening
@@ -140,7 +140,7 @@ Zatim:
 3. Provjeri da obrisani trening i dalje ne postoji.
 
 <p align="center">
-  <img src="../screenshots/AfterDeleteWorkout.png" width="250" alt="Trening nakon brisanja">
+  <img src="../../screenshots/AfterDeleteWorkout.png" width="250" alt="Trening nakon brisanja">
 </p>
 
 ### 3. Zašto ne treba zasebna `updateWorkout` funkcija?

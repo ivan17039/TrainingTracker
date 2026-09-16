@@ -77,11 +77,11 @@ Zbog toga što `Workout` sadrži `exercises: List<Exercise>` potrebno je pretvar
 
 1. Dodaj trening, zatvori app potpuno, ugasi mobilne podatke/WiFi, ponovno otvori – trening je i dalje tu (Room ne treba internet).
 
-   <img src="../screenshots/RoomDataNoInternet.png" width="250" alt="Room podaci bez interneta">
+   <img src="../../screenshots/RoomDataNoInternet.png" width="250" alt="Room podaci bez interneta">
 
 2. Obriši app podatke (Postavke → Aplikacije → TrainingTracker → Pohrana → Obriši podatke), pokreni app. Trebaju se vratiti default 4 treninga, bez ijednog koji si sam ranije dodao.
 
-   <img src="../screenshots/ListAfterDeleteData.png" width="250" alt="Lista nakon obrisane pohrane">
+   <img src="../../screenshots/ListAfterDeleteData.png" width="250" alt="Lista nakon obrisane pohrane">
 
 3. *(Bez koda)* Zašto smo `nextId()` mogli jednostavno obrisati, umjesto da je i dalje pozivamo negdje?
 
