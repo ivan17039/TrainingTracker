@@ -6,3 +6,5 @@ data class WorkoutDetail(val workoutId: Int)
 data class WorkoutEdit(val workoutId: Int)
 
 data class WorkoutForm(val workoutId: Int ? = null)
+
+data class ExerciseForm(val workoutId: Int ?)

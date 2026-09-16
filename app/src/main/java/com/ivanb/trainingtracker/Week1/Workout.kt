@@ -8,7 +8,7 @@ data class Workout (
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val name: String,
     val dateMillis: Long = System.currentTimeMillis(),
-    val exercises: List<Exercise> = emptyList()
+    val exercises: List<Exercise> = emptyList(),
 )
 
 data class Exercise(

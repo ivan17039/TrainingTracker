@@ -12,7 +12,7 @@ interface WorkoutDao {
     fun getAll(): Flow<List<Workout>>
 
     @Query("SELECT * FROM workouts WHERE id = :id")
-    suspend fun getById(id: Int): Workout?
+    suspend fun getById(id: Int?): Workout?
 
     @Query("SELECT COUNT(*) FROM workouts")
     suspend fun count(): Int
@@ -25,4 +25,7 @@ interface WorkoutDao {
 
     @Query("DELETE FROM workouts WHERE id = :id")
     suspend fun deleteById(id: Int)
+
+    @Query("SELECT * FROM workouts WHERE id = :id")
+    fun observeById(id: Int): Flow<Workout?>
 }

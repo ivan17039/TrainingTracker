@@ -8,26 +8,24 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
-import com.ivanb.trainingtracker.Week1.DummyData
+import com.ivanb.trainingtracker.Week1.ExerciseForm
 import com.ivanb.trainingtracker.Week1.NavigationViewModel
 import com.ivanb.trainingtracker.Week1.WorkoutForm
 import com.ivanb.trainingtracker.Week1.WorkoutFormScreen
 import com.ivanb.trainingtracker.Week1.WorkoutDetail
 import com.ivanb.trainingtracker.Week1.WorkoutDetailScreen
-import com.ivanb.trainingtracker.Week1.WorkoutEdit
-import com.ivanb.trainingtracker.Week1.WorkoutEditScreen
 import com.ivanb.trainingtracker.Week1.WorkoutList
 import com.ivanb.trainingtracker.Week1.WorkoutListScreen
+import com.ivanb.trainingtracker.Week2.ExerciseFormScreen
 import com.ivanb.trainingtracker.ui.theme.TrainingTrackerTheme
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.Map.entry
+
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,7 +64,15 @@ fun TrainingTrackerApp(navViewModel: NavigationViewModel = viewModel()) {
                 WorkoutDetailScreen(
                     workoutId = key.workoutId,
                     onBack = { backStack.removeLastOrNull() },
-                    onEditClick = { id -> backStack.add(WorkoutForm(id)) }
+                    onEditClick = { id -> backStack.add(WorkoutForm(id)) },
+                    onAddExerciseClick = {id -> backStack.add(ExerciseForm(workoutId = id))}
+                )
+            }
+            entry<ExerciseForm> { key ->
+                ExerciseFormScreen(
+                    workoutId = key.workoutId,
+                    onBack = { backStack.removeLastOrNull() },
+                    onSaved = { backStack.removeLastOrNull() }
                 )
             }
 

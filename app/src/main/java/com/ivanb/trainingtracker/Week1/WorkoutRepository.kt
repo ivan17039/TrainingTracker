@@ -27,4 +27,14 @@ class WorkoutRepository @Inject constructor(
     suspend fun deleteWorkout(id: Int){
         workoutDao.deleteById(id)
     }
+
+    fun observeWorkout(id: Int): Flow<Workout?>{
+        return workoutDao.observeById(id)
+    }
+
+    suspend fun addExerciseToWorkout(workoutId: Int?, exercise: Exercise){
+        val workout = workoutDao.getById(workoutId) ?: return
+        val updated = workout.copy(exercises = workout.exercises + exercise)
+        workoutDao.insert(updated)
+    }
 }

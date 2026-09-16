@@ -1,10 +1,5 @@
 package com.ivanb.trainingtracker.Week1
 
-import androidx.compose.runtime.remember
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
-
 object DummyData {
 
     private const val ONE_DAY_MS = 24 * 60 * 60 * 1000L
@@ -12,7 +7,7 @@ object DummyData {
         Workout(
             id = 1,
             name = "Push Day",
-            dateMillis = System.currentTimeMillis()- (1 * ONE_DAY_MS),
+            dateMillis = System.currentTimeMillis() - (1 * ONE_DAY_MS),
             exercises = listOf(
                 Exercise("Bench Press", sets = 4, reps = 8, weightKg = 60.0),
                 Exercise("Shoulder Press", sets = 3, reps = 10, weightKg = 25.0)

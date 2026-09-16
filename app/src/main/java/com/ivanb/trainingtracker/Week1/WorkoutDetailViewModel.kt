@@ -19,7 +19,9 @@ class WorkoutDetailViewModel @Inject constructor(
 
     fun loadWorkout(id: Int) {
         viewModelScope.launch{
-            _workout.value = repository.getWorkoutById(id)
+            repository.observeWorkout(id).collect { fromRoom ->
+                _workout.value = fromRoom
+            }
         }
     }
 
