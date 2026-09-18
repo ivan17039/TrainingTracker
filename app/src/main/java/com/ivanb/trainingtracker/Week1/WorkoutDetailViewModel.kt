@@ -31,4 +31,10 @@ class WorkoutDetailViewModel @Inject constructor(
             onDeleted()
         }
     }
+
+    fun deleteExercise(workoutId: Int, exerciseId: String) {
+        viewModelScope.launch {
+            repository.deleteExerciseFromWorkout(workoutId, exerciseId)
+        }
+    }
 }

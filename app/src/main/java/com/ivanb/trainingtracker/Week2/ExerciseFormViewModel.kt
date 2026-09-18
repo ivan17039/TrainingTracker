@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.ivanb.trainingtracker.Week1.Exercise
 import com.ivanb.trainingtracker.Week1.WorkoutRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import jakarta.inject.Inject
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -31,6 +31,9 @@ class ExerciseFormViewModel @Inject constructor(
 
     private val _error = MutableStateFlow<String?>(null)
     val error: StateFlow<String?> = _error.asStateFlow()
+
+    private var editingExercise: Exercise? = null
+
 
     fun onNameChange(value: String){
         _name.value = value
@@ -64,6 +67,7 @@ class ExerciseFormViewModel @Inject constructor(
         _reps.value = ""
         _weight.value = ""
         _error.value = null
+        editingExercise = null
     }
 
     fun onSaveClick(workoutId: Int?, onSaved: () -> Unit) {
@@ -92,6 +96,19 @@ class ExerciseFormViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
+            val existing = editingExercise
+            if(existing != null){
+                repository.updateExerciseInWorkout(
+                    workoutId,
+                    existing.copy(
+                        name = trimmedName,
+                        sets = setsValue,
+                        reps = repsValue,
+                        weightKg = weightValue
+                    )
+                )
+            }
+            else{
             repository.addExerciseToWorkout(
                 workoutId,
                 Exercise(
@@ -101,8 +118,24 @@ class ExerciseFormViewModel @Inject constructor(
                     weightKg = weightValue
                 )
             )
+            }
             clearForm()
             onSaved()
         }
     }
+    fun loadForEdit(workoutId: Int?, exerciseId: String) {
+        viewModelScope.launch {
+            val workout = repository.getWorkoutById(workoutId)
+            val exercise = workout?.exercises?.find { it.id == exerciseId }
+            if (exercise != null) {
+                editingExercise = exercise
+                _name.value = exercise.name
+                _sets.value = exercise.sets.toString()
+                _reps.value = exercise.reps.toString()
+                _weight.value = exercise.weightKg.toString()
+            }
+        }
+    }
+
+
 }

@@ -2,6 +2,7 @@ package com.ivanb.trainingtracker.Week1
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -34,6 +35,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.TextButton
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WorkoutDetailScreen(
@@ -41,6 +45,7 @@ fun WorkoutDetailScreen(
     onBack: () -> Unit,
     onEditClick: (Int) ->Unit,
     onAddExerciseClick: (Int) -> Unit,
+    onEditExerciseClick: (Int, String) -> Unit,
     viewModel: WorkoutDetailViewModel = viewModel()
 ){
     var showDeleteDialog by remember {
@@ -147,20 +152,29 @@ fun WorkoutDetailScreen(
                         .fillMaxSize()
                         .padding(padding)
                 ) {
-                    items(currentWorkout.exercises) { exercise ->
-                        Column(
+                    items(currentWorkout.exercises, key = { it.id }) { exercise ->
+                        Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(16.dp)
+                                .padding(horizontal = 16.dp, vertical = 8.dp),
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Text(
-                                text = exercise.name,
-                                style = MaterialTheme.typography.titleSmall
-                            )
-                            Text(
-                                text = "${exercise.sets} x ${exercise.reps} @ ${exercise.weightKg}kg",
-                                style = MaterialTheme.typography.bodyMedium
-                            )
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text(
+                                    text = exercise.name,
+                                    style = MaterialTheme.typography.titleSmall
+                                )
+                                Text(
+                                    text = "${exercise.sets} x ${exercise.reps} @ ${exercise.weightKg}kg",
+                                    style = MaterialTheme.typography.bodyMedium
+                                )
+                            }
+                            IconButton(onClick = { onEditExerciseClick(workoutId, exercise.id) }) {
+                                Icon(Icons.Default.Edit, contentDescription = "Uredi vježbu")
+                            }
+                            IconButton(onClick = { viewModel.deleteExercise(workoutId, exercise.id) }) {
+                                Icon(Icons.Default.Delete, contentDescription = "Izbriši vježbu")
+                            }
                         }
                     }
                 }

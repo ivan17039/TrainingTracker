@@ -65,12 +65,16 @@ fun TrainingTrackerApp(navViewModel: NavigationViewModel = viewModel()) {
                     workoutId = key.workoutId,
                     onBack = { backStack.removeLastOrNull() },
                     onEditClick = { id -> backStack.add(WorkoutForm(id)) },
-                    onAddExerciseClick = {id -> backStack.add(ExerciseForm(workoutId = id))}
+                    onAddExerciseClick = {id -> backStack.add(ExerciseForm(workoutId = id))},
+                    onEditExerciseClick = { wId, eId ->
+                        backStack.add(ExerciseForm(workoutId = wId, exerciseId = eId))
+                    }
                 )
             }
             entry<ExerciseForm> { key ->
                 ExerciseFormScreen(
                     workoutId = key.workoutId,
+                    exerciseId = key.exerciseId,
                     onBack = { backStack.removeLastOrNull() },
                     onSaved = { backStack.removeLastOrNull() }
                 )

@@ -7,4 +7,4 @@ data class WorkoutEdit(val workoutId: Int)
 
 data class WorkoutForm(val workoutId: Int ? = null)
 
-data class ExerciseForm(val workoutId: Int ?)
+data class ExerciseForm(val workoutId: Int, val exerciseId: String ? = null)

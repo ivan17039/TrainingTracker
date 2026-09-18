@@ -22,27 +22,38 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExerciseFormScreen(
-    workoutId: Int?,
+    workoutId: Int,
+    exerciseId: String?,
     onBack: () -> Unit,
     onSaved: () -> Unit,
     viewModel: ExerciseFormViewModel = viewModel()
 ) {
+    android.util.Log.d("ExerciseForm", "workoutId = $workoutId, exerciseId = $exerciseId")
     val name by viewModel.name.collectAsState()
     val sets by viewModel.sets.collectAsState()
     val reps by viewModel.reps.collectAsState()
     val weight by viewModel.weight.collectAsState()
     val error by viewModel.error.collectAsState()
 
+    LaunchedEffect(exerciseId) {
+        if(exerciseId != null){
+            viewModel.loadForEdit(workoutId, exerciseId)
+        } else {
+            viewModel.clearForm()
+        }
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Nova vježba") },
+                title = { Text(if (exerciseId == null) "Nova vježba" else "Uredi vježbu") },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Natrag")
@@ -101,7 +112,7 @@ fun ExerciseFormScreen(
                 onClick = { viewModel.onSaveClick(workoutId, onSaved) },
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Spremi vježbu")
+                Text(if (exerciseId == null) "Spremi vježbu" else "Spremi promjene")
             }
         }
     }
