@@ -1,4 +1,4 @@
-package com.ivanb.trainingtracker.Week1
+package com.ivanb.trainingtracker.data
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel

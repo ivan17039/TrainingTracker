@@ -1,5 +1,6 @@
-package com.ivanb.trainingtracker.Week2
+package com.ivanb.trainingtracker
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,6 +26,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.ivanb.trainingtracker.data.ExerciseFormViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -35,7 +37,7 @@ fun ExerciseFormScreen(
     onSaved: () -> Unit,
     viewModel: ExerciseFormViewModel = viewModel()
 ) {
-    android.util.Log.d("ExerciseForm", "workoutId = $workoutId, exerciseId = $exerciseId")
+    Log.d("ExerciseForm", "workoutId = $workoutId, exerciseId = $exerciseId")
     val name by viewModel.name.collectAsState()
     val sets by viewModel.sets.collectAsState()
     val reps by viewModel.reps.collectAsState()

@@ -1,4 +1,4 @@
-package com.ivanb.trainingtracker.Week1
+package com.ivanb.trainingtracker.data
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -12,7 +12,7 @@ interface WorkoutDao {
     fun getAll(): Flow<List<Workout>>
 
     @Query("SELECT * FROM workouts WHERE id = :id")
-    suspend fun getById(id: Int?): Workout?
+    suspend fun getById(id: Int): Workout?
 
     @Query("SELECT COUNT(*) FROM workouts")
     suspend fun count(): Int

@@ -1,4 +1,4 @@
-package com.ivanb.trainingtracker.Week1
+package com.ivanb.trainingtracker
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

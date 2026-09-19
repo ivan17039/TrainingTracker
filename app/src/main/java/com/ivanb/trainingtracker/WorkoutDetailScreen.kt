@@ -1,4 +1,4 @@
-package com.ivanb.trainingtracker.Week1
+package com.ivanb.trainingtracker
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,7 +13,6 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -35,8 +34,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.TextButton
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.launch
+import com.ivanb.trainingtracker.data.WorkoutDetailViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

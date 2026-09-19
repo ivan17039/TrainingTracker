@@ -1,9 +1,7 @@
-package com.ivanb.trainingtracker.Week2
+package com.ivanb.trainingtracker.data
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ivanb.trainingtracker.Week1.Exercise
-import com.ivanb.trainingtracker.Week1.WorkoutRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -70,7 +68,7 @@ class ExerciseFormViewModel @Inject constructor(
         editingExercise = null
     }
 
-    fun onSaveClick(workoutId: Int?, onSaved: () -> Unit) {
+    fun onSaveClick(workoutId: Int, onSaved: () -> Unit) {
         val trimmedName = _name.value.trim()
         if (trimmedName.isBlank()) {
             _error.value = "Ime vježbe je obavezno"
@@ -123,7 +121,7 @@ class ExerciseFormViewModel @Inject constructor(
             onSaved()
         }
     }
-    fun loadForEdit(workoutId: Int?, exerciseId: String) {
+    fun loadForEdit(workoutId: Int, exerciseId: String) {
         viewModelScope.launch {
             val workout = repository.getWorkoutById(workoutId)
             val exercise = workout?.exercises?.find { it.id == exerciseId }

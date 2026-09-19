@@ -1,4 +1,4 @@
-package com.ivanb.trainingtracker.Week1
+package com.ivanb.trainingtracker.data
 
 import android.content.Context
 import androidx.room.Room

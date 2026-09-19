@@ -1,4 +1,4 @@
-package com.ivanb.trainingtracker.Week1
+package com.ivanb.trainingtracker.data
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson

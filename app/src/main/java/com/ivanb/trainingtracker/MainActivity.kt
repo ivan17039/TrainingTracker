@@ -14,15 +14,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
-import com.ivanb.trainingtracker.Week1.ExerciseForm
-import com.ivanb.trainingtracker.Week1.NavigationViewModel
-import com.ivanb.trainingtracker.Week1.WorkoutForm
-import com.ivanb.trainingtracker.Week1.WorkoutFormScreen
-import com.ivanb.trainingtracker.Week1.WorkoutDetail
-import com.ivanb.trainingtracker.Week1.WorkoutDetailScreen
-import com.ivanb.trainingtracker.Week1.WorkoutList
-import com.ivanb.trainingtracker.Week1.WorkoutListScreen
-import com.ivanb.trainingtracker.Week2.ExerciseFormScreen
+import com.ivanb.trainingtracker.data.ExerciseForm
+import com.ivanb.trainingtracker.data.NavigationViewModel
+import com.ivanb.trainingtracker.data.WorkoutDetail
+import com.ivanb.trainingtracker.data.WorkoutForm
+import com.ivanb.trainingtracker.data.WorkoutList
 import com.ivanb.trainingtracker.ui.theme.TrainingTrackerTheme
 import dagger.hilt.android.AndroidEntryPoint
 

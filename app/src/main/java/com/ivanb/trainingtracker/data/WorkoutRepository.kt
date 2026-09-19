@@ -1,4 +1,4 @@
-package com.ivanb.trainingtracker.Week1
+package com.ivanb.trainingtracker.data
 
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -10,7 +10,7 @@ class WorkoutRepository @Inject constructor(
 ) {
     val workouts: Flow<List<Workout>> = workoutDao.getAll()
 
-    suspend fun getWorkoutById(id: Int?): Workout? {
+    suspend fun getWorkoutById(id: Int): Workout? {
         return workoutDao.getById(id)
     }
 
@@ -32,13 +32,13 @@ class WorkoutRepository @Inject constructor(
         return workoutDao.observeById(id)
     }
 
-    suspend fun addExerciseToWorkout(workoutId: Int?, exercise: Exercise){
+    suspend fun addExerciseToWorkout(workoutId: Int, exercise: Exercise){
         val workout = workoutDao.getById(workoutId) ?: return
         val updated = workout.copy(exercises = workout.exercises + exercise)
         workoutDao.insert(updated)
     }
 
-    suspend fun updateExerciseInWorkout(workoutId: Int?, exercise: Exercise){
+    suspend fun updateExerciseInWorkout(workoutId: Int, exercise: Exercise){
         val workout = workoutDao.getById(workoutId) ?: return
         val updated = workout.copy(exercises = workout.exercises.map {if (it.id == exercise.id) exercise else it})
         workoutDao.insert(updated)
