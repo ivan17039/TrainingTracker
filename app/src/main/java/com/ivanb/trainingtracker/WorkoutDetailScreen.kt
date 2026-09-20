@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -45,7 +46,7 @@ fun WorkoutDetailScreen(
     onAddExerciseClick: (Int) -> Unit,
     onEditExerciseClick: (Int, String) -> Unit,
     viewModel: WorkoutDetailViewModel = viewModel()
-){
+) {
     var showDeleteDialog by remember {
         mutableStateOf(false)
     }
@@ -132,46 +133,72 @@ fun WorkoutDetailScreen(
                 Text("Trening nije pronađen")
             }
         } else {
-            // workout nije null → sad gledamo ima li vježbi
-            if (currentWorkout.exercises.isEmpty()) {
-                // NEMA vježbi → prikaži samo poruku, BEZ LazyColumn
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(padding),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text("Nema unesenih vježbi.")
-                }
-            } else {
-                // IMA vježbi → prikaži LazyColumn
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(padding)
-                ) {
-                    items(currentWorkout.exercises, key = { it.id }) { exercise ->
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 16.dp, vertical = 8.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Column(modifier = Modifier.weight(1f)) {
-                                Text(
-                                    text = exercise.name,
-                                    style = MaterialTheme.typography.titleSmall
-                                )
-                                Text(
-                                    text = "${exercise.sets} x ${exercise.reps} @ ${exercise.weightKg}kg",
-                                    style = MaterialTheme.typography.bodyMedium
-                                )
-                            }
-                            IconButton(onClick = { onEditExerciseClick(workoutId, exercise.id) }) {
-                                Icon(Icons.Default.Edit, contentDescription = "Uredi vježbu")
-                            }
-                            IconButton(onClick = { viewModel.deleteExercise(workoutId, exercise.id) }) {
-                                Icon(Icons.Default.Delete, contentDescription = "Izbriši vježbu")
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(padding)
+            ) {
+                // DATUM TRENINGA - dodaj ovo
+                Text(
+                    text = currentWorkout.dateMillis.toFormattedDate(),
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                )
+                // workout nije null → sad gledamo ima li vježbi
+                if (currentWorkout.exercises.isEmpty()) {
+                    // NEMA vježbi → prikaži samo poruku, BEZ LazyColumn
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(padding),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text("Nema unesenih vježbi.")
+                    }
+                } else {
+                    // IMA vježbi → prikaži LazyColumn
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxSize()
+                    )
+                    {
+                        items(currentWorkout.exercises, key = { it.id }) { exercise ->
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Column(modifier = Modifier.weight(1f)) {
+                                    Text(
+                                        text = exercise.name,
+                                        style = MaterialTheme.typography.titleSmall
+                                    )
+
+                                    Text(
+                                        text = "${exercise.sets} x ${exercise.reps} @ ${exercise.weightKg}kg",
+                                        style = MaterialTheme.typography.bodyMedium
+                                    )
+                                }
+                                IconButton(onClick = {
+                                    onEditExerciseClick(
+                                        workoutId,
+                                        exercise.id
+                                    )
+                                }) {
+                                    Icon(Icons.Default.Edit, contentDescription = "Uredi vježbu")
+                                }
+                                IconButton(onClick = {
+                                    viewModel.deleteExercise(
+                                        workoutId,
+                                        exercise.id
+                                    )
+                                }) {
+                                    Icon(
+                                        Icons.Default.Delete,
+                                        contentDescription = "Izbriši vježbu"
+                                    )
+                                }
                             }
                         }
                     }

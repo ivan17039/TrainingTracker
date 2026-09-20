@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.serialization.descriptors.PrimitiveKind
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,11 +23,16 @@ class WorkoutFormViewModel @Inject constructor(
 
     private var editingWorkout: Workout ? = null
 
+    private val _dateMillis = MutableStateFlow(System.currentTimeMillis())
+
+    val dateMillis: StateFlow<Long> = _dateMillis.asStateFlow()
+
     fun loadForEdit(workoutId: Int) {
         viewModelScope.launch {
             val workout = repository.getWorkoutById(workoutId)
             editingWorkout = workout
             _name.value = workout?.name ?: ""
+            _dateMillis.value = workout?.dateMillis ?: System.currentTimeMillis()
         }
     }
     fun onNameChange(newName: String) {
@@ -36,6 +42,9 @@ class WorkoutFormViewModel @Inject constructor(
         }
     }
 
+    fun onDateChange(newDateMillis: Long){
+        _dateMillis.value = newDateMillis
+    }
     fun onSaveClick(onSaved: () -> Unit) {
         val trimmed = _name.value.trim()
         if (trimmed.isBlank()) {
@@ -45,16 +54,22 @@ class WorkoutFormViewModel @Inject constructor(
         viewModelScope.launch {
             val existing = editingWorkout
             if(existing!=null){
-                repository.addWorkout(existing.copy(name = trimmed))
+                repository.addWorkout(existing.copy(name = trimmed, dateMillis = _dateMillis.value))
             } else{
             repository.addWorkout(
                 Workout(
                     name = trimmed,
-                    dateMillis = System.currentTimeMillis()
+                    dateMillis = _dateMillis.value
                 )
             )
             }
             onSaved()
         }
     }
+    fun clearForm() {
+        _name.value = ""
+        _dateMillis.value = System.currentTimeMillis()
+        _nameError.value = null
+    }
+
 }

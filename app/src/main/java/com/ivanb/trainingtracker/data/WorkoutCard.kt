@@ -11,14 +11,13 @@ import androidx.compose.material.icons.filled.FitnessCenter
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
+import com.ivanb.trainingtracker.toFormattedDate
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
 @Composable
 fun WorkoutCard(workout: Workout, modifier: Modifier = Modifier){
-    val dateFormat = remember { SimpleDateFormat("dd.MM.yyyy.", Locale.getDefault()) }
-    val dateString = dateFormat.format(Date(workout.dateMillis))
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -34,7 +33,7 @@ fun WorkoutCard(workout: Workout, modifier: Modifier = Modifier){
                 )
             }
             Spacer(modifier = Modifier.height(4.dp))
-            Text(text = dateString, style = MaterialTheme.typography.bodySmall)
+            Text(text = workout.dateMillis.toFormattedDate(), style = MaterialTheme.typography.bodySmall)
             Spacer(modifier = Modifier.height(8.dp))
             Text(text = "${workout.exercises.size} vježbi", style = MaterialTheme.typography.bodyMedium)
         }
