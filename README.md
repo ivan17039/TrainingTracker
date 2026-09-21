@@ -18,10 +18,10 @@ TrainingTracker lets you log workouts and see your training history, fully offli
 - [x] View workout details (exercises, sets, reps, weight)
 - [x] Add a new workout through a validated form
 - [x] Offline-first local persistence — data survives app restarts, no internet needed
+- [x] Add / edit exercises within a workout
+- [x] Edit and delete existing workouts
 
 **Planned**
-- [ ] Add / edit exercises within a workout
-- [ ] Edit and delete existing workouts
 - [ ] User accounts (register / login)
 - [ ] Backend sync (REST API + PostgreSQL)
 - [ ] Workout statistics and progress charts
