@@ -15,6 +15,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
 import com.ivanb.trainingtracker.data.ExerciseForm
+import com.ivanb.trainingtracker.data.Login
 import com.ivanb.trainingtracker.data.NavigationViewModel
 import com.ivanb.trainingtracker.data.WorkoutDetail
 import com.ivanb.trainingtracker.data.WorkoutForm
@@ -53,7 +54,14 @@ fun TrainingTrackerApp(navViewModel: NavigationViewModel = viewModel()) {
             entry<WorkoutList> {
                 WorkoutListScreen(
                     onWorkoutClick = { id -> backStack.add(WorkoutDetail(id)) },
-                    onAddClick = {backStack.add(WorkoutForm())}
+                    onAddClick = { backStack.add(WorkoutForm()) },
+                    onLoginClick = { backStack.add(Login) }
+                )
+            }
+            entry<Login> {
+                LoginScreen(
+                    onBack = { backStack.removeLastOrNull() },
+                    onLoggedIn = { backStack.removeLastOrNull() }
                 )
             }
             entry<WorkoutDetail> { key ->

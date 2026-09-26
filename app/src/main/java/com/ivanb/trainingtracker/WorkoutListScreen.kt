@@ -10,12 +10,15 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -26,10 +29,12 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ivanb.trainingtracker.data.WorkoutCard
 import com.ivanb.trainingtracker.data.WorkoutListViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WorkoutListScreen(
     onWorkoutClick: (Int) -> Unit,
     onAddClick: () -> Unit,
+    onLoginClick: () -> Unit,
     viewModel: WorkoutListViewModel = viewModel(),
     modifier: Modifier = Modifier
 ) {
@@ -50,6 +55,21 @@ fun WorkoutListScreen(
     }
 
     Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text("Treninzi")
+                },
+                actions = {
+                    IconButton(onClick = onLoginClick) {
+                        Icon(
+                            imageVector = Icons.Default.Person,
+                            contentDescription = "Prijava"
+                        )
+                    }
+                }
+            )
+        },
         floatingActionButton = {
             FloatingActionButton(onClick = onAddClick) {
                 Icon(

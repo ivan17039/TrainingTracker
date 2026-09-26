@@ -1,7 +1,9 @@
-package com.ivanb.trainingtracker.data
+package com.ivanb.trainingtracker.di
 
 import android.content.Context
 import androidx.room.Room
+import com.ivanb.trainingtracker.data.AppDatabase
+import com.ivanb.trainingtracker.data.WorkoutDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

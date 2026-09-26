@@ -1,4 +1,4 @@
-# Tjedan 2, Dan 3 – Datum treninga i sortiranje
+ # Tjedan 2, Dan 3 – Datum treninga i sortiranje
 
 Trenutno aplikacija radi da se datum dodijeli na kreiranju određenog treninga. Stoga definicija sortiranja nije imala smisla i s time uvodimo opciju biranja datuma kad se kreira trening.
 
