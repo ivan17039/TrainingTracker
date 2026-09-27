@@ -16,4 +16,8 @@ class AuthRepository @Inject constructor(
     suspend fun register(email: String, password: String): Int {
         return authApi.register(RegisterRequest(email, password)).userId
     }
+
+    fun logout() {
+        tokenStorage.clearToken()
+    }
 }

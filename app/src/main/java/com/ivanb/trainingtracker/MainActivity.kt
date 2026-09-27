@@ -9,6 +9,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -17,6 +21,7 @@ import androidx.navigation3.ui.NavDisplay
 import com.ivanb.trainingtracker.data.ExerciseForm
 import com.ivanb.trainingtracker.data.Login
 import com.ivanb.trainingtracker.data.NavigationViewModel
+import com.ivanb.trainingtracker.data.Register
 import com.ivanb.trainingtracker.data.WorkoutDetail
 import com.ivanb.trainingtracker.data.WorkoutForm
 import com.ivanb.trainingtracker.data.WorkoutList
@@ -46,7 +51,9 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun TrainingTrackerApp(navViewModel: NavigationViewModel = viewModel()) {
     val backStack = navViewModel.backStack
-
+    var registrationMessage by remember {
+        mutableStateOf<String?>(null)
+    }
     NavDisplay(
         backStack = backStack,
         onBack = { backStack.removeLastOrNull() },
@@ -60,8 +67,25 @@ fun TrainingTrackerApp(navViewModel: NavigationViewModel = viewModel()) {
             }
             entry<Login> {
                 LoginScreen(
-                    onBack = { backStack.removeLastOrNull() },
-                    onLoggedIn = { backStack.removeLastOrNull() }
+                    onBack = {
+                        backStack.removeLastOrNull()
+                    },
+                    onLoggedIn = {
+                        backStack.removeLastOrNull()
+                    },
+                    onRegisterClick = {
+                        registrationMessage = null
+                        backStack.add(Register)
+                    },
+                    registrationMessage = registrationMessage
+                )
+            }
+            entry<Register>{
+                RegisterScreen(
+                    onBack = {backStack.removeLastOrNull()},
+                    onRegisterIn = {
+                        backStack.removeLastOrNull()
+                    }
                 )
             }
             entry<WorkoutDetail> { key ->

@@ -21,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ivanb.trainingtracker.data.LoginViewModel
@@ -31,7 +32,9 @@ import com.ivanb.trainingtracker.data.LoginViewModel
 fun LoginScreen(
     onBack: () -> Unit,
     onLoggedIn: () -> Unit,
-    viewModel: LoginViewModel = viewModel()
+    viewModel: LoginViewModel = viewModel(),
+    onRegisterClick: () -> Unit,
+    registrationMessage: String? = null,
 ) {
     val email by viewModel.email.collectAsState()
     val password by viewModel.password.collectAsState()
@@ -56,6 +59,12 @@ fun LoginScreen(
                 .padding(padding)
                 .padding(16.dp)
         ) {
+            registrationMessage?.let {
+                Text(
+                    text = it,
+                    modifier = Modifier.padding(bottom = 12.dp)
+                )
+            }
             OutlinedTextField(
                 value = email,
                 onValueChange = viewModel::onEmailChange,
@@ -67,7 +76,9 @@ fun LoginScreen(
                 value = password,
                 onValueChange = viewModel::onPasswordChange,
                 label = { Text("Lozinka") },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                singleLine = true,
+                visualTransformation = PasswordVisualTransformation()
             )
 
             error?.let {
@@ -86,6 +97,13 @@ fun LoginScreen(
                 ) {
                     Text("Prijavi se")
                 }
+            }
+            Spacer(modifier = Modifier.height(12.dp))
+            Button(
+                onClick = onRegisterClick,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Nemaš račun? Registriraj se")
             }
         }
     }

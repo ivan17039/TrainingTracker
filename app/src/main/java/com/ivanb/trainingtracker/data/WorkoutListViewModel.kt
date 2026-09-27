@@ -11,7 +11,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WorkoutListViewModel @Inject constructor(
-    private val repository: WorkoutRepository
+    private val repository: WorkoutRepository,
+    private val authRepository: AuthRepository
 ) : ViewModel() {
 
     private val _workouts = MutableStateFlow<List<Workout>>(emptyList())
@@ -33,5 +34,9 @@ class WorkoutListViewModel @Inject constructor(
 
     fun onSearchQueryChange(query: String) {
         _searchQuery.value = query
+    }
+
+    fun onLogoutClick(){
+        authRepository.logout()
     }
 }
