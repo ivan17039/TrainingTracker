@@ -11,14 +11,16 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.Logout
+import androidx.compose.material.icons.filled.CloudUpload
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -28,6 +30,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.ivanb.trainingtracker.data.SyncViewModel
 import com.ivanb.trainingtracker.data.WorkoutCard
 import com.ivanb.trainingtracker.data.WorkoutListViewModel
 
@@ -38,10 +41,12 @@ fun WorkoutListScreen(
     onAddClick: () -> Unit,
     onLoginClick: () -> Unit,
     viewModel: WorkoutListViewModel = viewModel(),
+    syncViewModel: SyncViewModel = viewModel(),
     modifier: Modifier = Modifier
 ) {
     val workouts by viewModel.workouts.collectAsState()
     val searchQuery by viewModel.searchQuery.collectAsState()
+    val resultMessage by syncViewModel.resultMessage.collectAsState()
 
     val filteredWorkouts = remember(workouts, searchQuery) {
         if (searchQuery.isBlank()) {
@@ -69,12 +74,22 @@ fun WorkoutListScreen(
                             contentDescription = "Prijava"
                         )
                     }
+
                     IconButton(
                         onClick = viewModel::onLogoutClick
                     ) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.Logout,
                             contentDescription = "Odjava"
+                        )
+                    }
+
+                    IconButton(
+                        onClick = syncViewModel::onSyncClick
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.CloudUpload,
+                            contentDescription = "Sinkroniziraj"
                         )
                     }
                 }
@@ -148,5 +163,24 @@ fun WorkoutListScreen(
                 }
             }
         }
+    }
+
+    if (resultMessage != null) {
+        AlertDialog(
+            onDismissRequest = syncViewModel::clearResult,
+            title = {
+                Text("Sinkronizacija")
+            },
+            text = {
+                Text(resultMessage!!)
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = syncViewModel::clearResult
+                ) {
+                    Text("U redu")
+                }
+            }
+        )
     }
 }

@@ -2,7 +2,7 @@ package com.ivanb.trainingtracker.data
 
 import javax.inject.Inject
 import javax.inject.Singleton
-
+import android.util.Log
 @Singleton
 class AuthRepository @Inject constructor(
     private val authApi: AuthApi,
@@ -18,6 +18,10 @@ class AuthRepository @Inject constructor(
     }
 
     fun logout() {
+        Log.d("Auth", "Kliknut logout - brišem token")
+
         tokenStorage.clearToken()
+
+        Log.d("Auth", "Token je obrisan")
     }
 }

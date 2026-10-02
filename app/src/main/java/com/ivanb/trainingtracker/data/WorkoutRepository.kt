@@ -1,6 +1,7 @@
 package com.ivanb.trainingtracker.data
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -50,5 +51,8 @@ class WorkoutRepository @Inject constructor(
         workoutDao.insert(updated)
     }
 
+    suspend fun getAllWorkoutsOnce(): List<Workout> {
+        return workouts.first()
+    }
 
 }
