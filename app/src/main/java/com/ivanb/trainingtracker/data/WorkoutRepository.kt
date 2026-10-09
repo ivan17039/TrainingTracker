@@ -19,12 +19,6 @@ class WorkoutRepository @Inject constructor(
         workoutDao.insert(workout)
     }
 
-    suspend fun seedIfEmpty() {
-        if (workoutDao.count() == 0) {
-            workoutDao.insertAll(DummyData.workouts)
-        }
-    }
-
     suspend fun deleteWorkout(id: Int){
         workoutDao.deleteById(id)
     }
@@ -58,6 +52,10 @@ class WorkoutRepository @Inject constructor(
     suspend fun setRemoteId(localId: Int, remoteId: Int) {
         val workout = workoutDao.getById(localId) ?: return
         workoutDao.insert(workout.copy(remoteId = remoteId))
+    }
+
+    suspend fun addWorkouts(workouts: List<Workout>) {
+        workoutDao.insertAll(workouts)
     }
 
 }

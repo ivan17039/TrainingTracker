@@ -10,11 +10,7 @@ class SyncRepository @Inject constructor(
         val localWorkouts = workoutRepository.getAllWorkoutsOnce()
 
         for (workout in localWorkouts) {
-            val request = CreateWorkoutRequest(
-                name = workout.name,
-                dateMillis = workout.dateMillis,
-                exercises = workout.exercises
-            )
+            val request = workout.toRequest()
 
             if (workout.remoteId == null) {
                 val remote = workoutApi.createWorkout(request)
@@ -25,5 +21,18 @@ class SyncRepository @Inject constructor(
         }
 
         return localWorkouts.size
+    }
+
+    suspend fun pullWorkouts(): Int {
+        val remoteWorkouts = workoutApi.getWorkouts()
+        val localWorkouts = workoutRepository.getAllWorkoutsOnce()
+        val knownRemoteIds = localWorkouts.mapNotNull { it.remoteId }.toSet()
+
+        val newWorkouts = remoteWorkouts
+            .filter { it.id !in knownRemoteIds }
+            .map { it.toWorkout() }
+
+        workoutRepository.addWorkouts(newWorkouts)
+        return newWorkouts.size
     }
 }

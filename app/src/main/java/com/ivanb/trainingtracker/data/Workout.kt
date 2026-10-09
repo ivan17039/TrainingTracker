@@ -20,3 +20,11 @@ data class Exercise(
     val weightKg: Double,
     val id: String = UUID.randomUUID().toString()
 )
+
+fun Workout.toRequest(): CreateWorkoutRequest {
+    return CreateWorkoutRequest(
+        name = name,
+        dateMillis = dateMillis,
+        exercises = exercises
+    )
+}

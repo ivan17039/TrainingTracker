@@ -23,9 +23,6 @@ class WorkoutListViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            repository.seedIfEmpty()
-        }
-        viewModelScope.launch {
             repository.workouts.collect { fromRoom ->
                 _workouts.value = fromRoom
             }

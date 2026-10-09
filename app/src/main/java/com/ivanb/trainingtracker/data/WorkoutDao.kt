@@ -14,8 +14,8 @@ interface WorkoutDao {
     @Query("SELECT * FROM workouts WHERE id = :id")
     suspend fun getById(id: Int): Workout?
 
-    @Query("SELECT COUNT(*) FROM workouts")
-    suspend fun count(): Int
+//    @Query("SELECT COUNT(*) FROM workouts")
+//    suspend fun count(): Int
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(workout: Workout)

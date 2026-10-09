@@ -20,3 +20,12 @@ data class CreateWorkoutRequest(
     val dateMillis: Long,
     val exercises: List<Exercise>
 )
+
+fun RemoteWorkout.toWorkout(): Workout {
+    return Workout(
+        name = name,
+        dateMillis = dateMillis,
+        exercises = exercises,
+        remoteId = id
+    )
+}

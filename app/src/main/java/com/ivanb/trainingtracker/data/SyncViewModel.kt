@@ -11,7 +11,8 @@ import javax.inject.Inject
 import android.util.Log
 @HiltViewModel
 class SyncViewModel @Inject constructor(
-    private val syncRepository: SyncRepository
+    private val syncRepository: SyncRepository,
+    private val tokenStorage: TokenStorage
 ) : ViewModel() {
 
     private val _isLoading = MutableStateFlow(false)
@@ -22,6 +23,12 @@ class SyncViewModel @Inject constructor(
 
     fun onSyncClick() {
         viewModelScope.launch {
+            val token = tokenStorage.getToken()
+
+            if (token == null) {
+                _resultMessage.value = "Nisi prijavljen. Prvo se prijavi."
+                return@launch
+            }
             _isLoading.value = true
             try {
                 val broj = syncRepository.pushAllWorkouts()
@@ -29,6 +36,29 @@ class SyncViewModel @Inject constructor(
             } catch (e: Exception) {
                 Log.e("Sync", "Slanje treninga nije uspjelo", e)
                 _resultMessage.value = "Slanje nije uspjelo. Provjeri vezu i prijavu."
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+    fun onRestoreClick() {
+        viewModelScope.launch {
+            val token = tokenStorage.getToken()
+
+            if (token == null) {
+                _resultMessage.value = "Nisi prijavljen. Prvo se prijavi."
+                return@launch
+            }
+            _isLoading.value = true
+            try {
+                val broj = syncRepository.pullWorkouts()
+                _resultMessage.value = if (broj == 0) {
+                    "Nema novih treninga u oblaku."
+                } else {
+                    "Preuzeto $broj treninga."
+                }
+            } catch (e: Exception) {
+                _resultMessage.value = "Preuzimanje nije uspjelo. Provjeri vezu i prijavu."
             } finally {
                 _isLoading.value = false
             }
