@@ -55,4 +55,9 @@ class WorkoutRepository @Inject constructor(
         return workouts.first()
     }
 
+    suspend fun setRemoteId(localId: Int, remoteId: Int) {
+        val workout = workoutDao.getById(localId) ?: return
+        workoutDao.insert(workout.copy(remoteId = remoteId))
+    }
+
 }

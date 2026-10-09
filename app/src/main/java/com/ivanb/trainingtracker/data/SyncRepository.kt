@@ -8,16 +8,22 @@ class SyncRepository @Inject constructor(
 ) {
     suspend fun pushAllWorkouts(): Int {
         val localWorkouts = workoutRepository.getAllWorkoutsOnce()
+
         for (workout in localWorkouts) {
-            android.util.Log.d("Sync", "Šaljem: ${workout.name}")
-            workoutApi.createWorkout(
-                CreateWorkoutRequest(
-                    name = workout.name,
-                    dateMillis = workout.dateMillis,
-                    exercises = workout.exercises
-                )
+            val request = CreateWorkoutRequest(
+                name = workout.name,
+                dateMillis = workout.dateMillis,
+                exercises = workout.exercises
             )
+
+            if (workout.remoteId == null) {
+                val remote = workoutApi.createWorkout(request)
+                workoutRepository.setRemoteId(workout.id, remote.id)
+            } else {
+                workoutApi.updateWorkout(workout.remoteId, request)
+            }
         }
+
         return localWorkouts.size
     }
 }

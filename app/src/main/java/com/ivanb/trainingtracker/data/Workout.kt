@@ -10,6 +10,7 @@ data class Workout (
     val name: String,
     val dateMillis: Long = System.currentTimeMillis(),
     val exercises: List<Exercise> = emptyList(),
+    val remoteId: Int? = null
 )
 
 data class Exercise(
