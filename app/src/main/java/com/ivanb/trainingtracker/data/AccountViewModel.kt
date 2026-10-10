@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import android.util.Log
 @HiltViewModel
-class SyncViewModel @Inject constructor(
+class AccountViewModel @Inject constructor(
     private val syncRepository: SyncRepository,
     private val authRepository: AuthRepository,
     private val tokenStorage: TokenStorage
