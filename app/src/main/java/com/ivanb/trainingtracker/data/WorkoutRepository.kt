@@ -58,4 +58,8 @@ class WorkoutRepository @Inject constructor(
         workoutDao.insertAll(workouts)
     }
 
+    suspend fun clearAll(){
+        workoutDao.deleteAll()
+    }
+
 }

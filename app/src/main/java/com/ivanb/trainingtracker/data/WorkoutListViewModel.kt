@@ -34,6 +34,8 @@ class WorkoutListViewModel @Inject constructor(
     }
 
     fun onLogoutClick(){
-        authRepository.logout()
+        viewModelScope.launch {
+            authRepository.logout()
+        }
     }
 }

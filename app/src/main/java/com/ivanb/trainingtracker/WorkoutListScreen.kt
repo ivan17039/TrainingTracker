@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.Logout
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.CloudDownload
@@ -28,7 +28,9 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -50,6 +52,10 @@ fun WorkoutListScreen(
     val searchQuery by viewModel.searchQuery.collectAsState()
     val resultMessage by syncViewModel.resultMessage.collectAsState()
 
+    val isLoggedIn by syncViewModel.isLoggedIn.collectAsState()
+    val logoutFailed by syncViewModel.logoutFailed.collectAsState()
+    var showLogoutDialog by remember { mutableStateOf(false) }
+
     val filteredWorkouts = remember(workouts, searchQuery) {
         if (searchQuery.isBlank()) {
             workouts
@@ -70,24 +76,32 @@ fun WorkoutListScreen(
                     Text("Treninzi")
                 },
                 actions = {
-                    IconButton(onClick = onLoginClick) {
-                        Icon(
-                            imageVector = Icons.Default.Person,
-                            contentDescription = "Prijava"
-                        )
-                    }
-
                     IconButton(
-                        onClick = viewModel::onLogoutClick
+                        onClick = {
+                            if (isLoggedIn) {
+                                showLogoutDialog = true
+                            } else {
+                                onLoginClick()
+                            }
+                        }
                     ) {
                         Icon(
-                            imageVector = Icons.AutoMirrored.Filled.Logout,
-                            contentDescription = "Odjava"
+                            imageVector = if (isLoggedIn) {
+                                Icons.Default.AccountCircle
+                            } else {
+                                Icons.Default.Person
+                            },
+                            contentDescription = if (isLoggedIn) {
+                                "Račun (odjava)"
+                            } else {
+                                "Prijava"
+                            }
                         )
                     }
 
                     IconButton(
-                        onClick = syncViewModel::onSyncClick
+                        onClick = syncViewModel::onSyncClick,
+                        enabled = isLoggedIn
                     ) {
                         Icon(
                             imageVector = Icons.Default.CloudUpload,
@@ -96,7 +110,8 @@ fun WorkoutListScreen(
                     }
 
                     IconButton(
-                        onClick = syncViewModel::onRestoreClick
+                        onClick = syncViewModel::onRestoreClick,
+                        enabled = isLoggedIn
                     ) {
                         Icon(
                             imageVector = Icons.Default.CloudDownload,
@@ -190,6 +205,67 @@ fun WorkoutListScreen(
                     onClick = syncViewModel::clearResult
                 ) {
                     Text("U redu")
+                }
+            }
+        )
+    }
+    if (showLogoutDialog) {
+        AlertDialog(
+            onDismissRequest = { showLogoutDialog = false },
+            title = {
+                Text("Odjava")
+            },
+            text = {
+                Text(
+                    "Treninzi se prvo spremaju u oblak, pa se brišu s ovog uređaja. " +
+                            "Ako spremanje ne uspije, odjava se prekida."
+                )
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        showLogoutDialog = false
+                        syncViewModel.onLogoutClick()
+                    }
+                ) {
+                    Text("Odjavi me")
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = { showLogoutDialog = false }
+                ) {
+                    Text("Odustani")
+                }
+            }
+        )
+    }
+
+    if (logoutFailed) {
+        AlertDialog(
+            onDismissRequest = syncViewModel::dismissLogoutFailed,
+            title = {
+                Text("Odjava nije uspjela")
+            },
+            text = {
+                Text(
+                    "Treninge nije bilo moguće spremiti u oblak (provjeri vezu i prijavu). " +
+                            "Ništa nije izgubljeno. Ako se ipak odjaviš, treninzi koji nisu " +
+                            "spremljeni bit će obrisani s ovog uređaja."
+                )
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = syncViewModel::onForceLogoutClick
+                ) {
+                    Text("Odjavi se svejedno")
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = syncViewModel::dismissLogoutFailed
+                ) {
+                    Text("Odustani")
                 }
             }
         )

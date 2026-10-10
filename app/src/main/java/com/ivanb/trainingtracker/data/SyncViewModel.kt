@@ -12,6 +12,7 @@ import android.util.Log
 @HiltViewModel
 class SyncViewModel @Inject constructor(
     private val syncRepository: SyncRepository,
+    private val authRepository: AuthRepository,
     private val tokenStorage: TokenStorage
 ) : ViewModel() {
 
@@ -20,6 +21,35 @@ class SyncViewModel @Inject constructor(
 
     private val _resultMessage = MutableStateFlow<String?>(null)
     val resultMessage: StateFlow<String?> = _resultMessage.asStateFlow()
+
+    val isLoggedIn: StateFlow<Boolean> = authRepository.isLoggedIn
+
+    private val _logoutFailed = MutableStateFlow(false)
+    val logoutFailed: StateFlow<Boolean> = _logoutFailed.asStateFlow()
+
+    fun onLogoutClick(){
+        viewModelScope.launch {
+            _isLoading.value = true
+            try{
+                authRepository.logout()
+            } catch(e: Exception){
+              _logoutFailed.value = true
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+
+    fun onForceLogoutClick() {
+        viewModelScope.launch {
+            authRepository.discardLocalSession()
+            _logoutFailed.value = false
+        }
+    }
+
+    fun dismissLogoutFailed() {
+        _logoutFailed.value = false
+    }
 
     fun onSyncClick() {
         viewModelScope.launch {
