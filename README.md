@@ -82,10 +82,11 @@ A few deliberate decisions worth calling out:
 
 ## Screenshots
 
-| Workouts | Add & Search | Offline |
-|:---:|:---:|:---:|
-| <img src="screenshots/EditButton.png" width="180px" alt="Screen of workouts" /> | <img src="screenshots/AddNewTrainingAndSearch.png" width="180px" alt="Add new training and search" /> | <img src="screenshots/RoomDataNoInternet.png" width="180px" alt="Room data without internet" /> |
+## Screenshots
 
+| Workouts | Add & Search | Signed out | Restored from cloud |
+|:---:|:---:|:---:|:---:|
+| <img src="screenshots/EditButton.png" width="180px" alt="Screen of workouts" /> | <img src="screenshots/AddNewTrainingAndSearch.png" width="180px" alt="Add new training and search" /> | <img src="screenshots/SignedOut.png" width="180px" alt="Workout list while signed out; backup and restore are disabled" /> | <img src="screenshots/RestoredFromCloud.png" width="180px" alt="Workout list after restoring workouts from the backend" /> |
 ## Getting Started
 
 1. Clone the repository
