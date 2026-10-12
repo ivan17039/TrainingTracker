@@ -26,11 +26,13 @@ class SyncRepository @Inject constructor(
     suspend fun pullWorkouts(): Int {
         val remoteWorkouts = workoutApi.getWorkouts()
         val localWorkouts = workoutRepository.getAllWorkoutsOnce()
-        val knownRemoteIds = localWorkouts.mapNotNull { it.remoteId }.toSet()
 
-        val newWorkouts = remoteWorkouts
-            .filter { it.id !in knownRemoteIds }
-            .map { it.toWorkout() }
+        val newRemoteWorkouts = findNewWorkouts(
+            remote = remoteWorkouts,
+            local = localWorkouts
+        )
+
+        val newWorkouts = newRemoteWorkouts.map { it.toWorkout() }
 
         workoutRepository.addWorkouts(newWorkouts)
         return newWorkouts.size

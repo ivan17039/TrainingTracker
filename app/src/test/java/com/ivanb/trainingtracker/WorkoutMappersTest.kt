@@ -2,6 +2,7 @@ package com.ivanb.trainingtracker
 
 import com.ivanb.trainingtracker.data.Exercise
 import com.ivanb.trainingtracker.data.RemoteWorkout
+import com.ivanb.trainingtracker.data.Workout
 import com.ivanb.trainingtracker.data.toWorkout
 import junit.framework.TestCase.assertEquals
 import org.junit.Test
@@ -44,5 +45,17 @@ class WorkoutMappersTest {
 
         assertEquals(1, local.exercises.size)
         assertEquals("Bench Press", local.exercises[0].name)
+    }
+
+    @Test
+    fun workout_hasDefaultValues() {
+        val workout = Workout(
+            name = "Leg Day",
+            dateMillis = 1_700_000_000_000L
+        )
+
+        assertEquals(0, workout.id)
+        assertEquals(null, workout.remoteId)
+        assertEquals(0, workout.exercises.size)
     }
 }
