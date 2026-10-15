@@ -3,6 +3,7 @@ package com.ivanb.trainingtracker.di
 import android.content.Context
 import androidx.room.Room
 import com.ivanb.trainingtracker.data.AppDatabase
+import com.ivanb.trainingtracker.data.SessionDao
 import com.ivanb.trainingtracker.data.WorkoutDao
 import dagger.Module
 import dagger.Provides
@@ -31,5 +32,10 @@ object DatabaseModule {
     @Singleton
     fun provideWorkoutDao(database: AppDatabase): WorkoutDao {
         return database.workoutDao()
+    }
+
+    @Provides @Singleton
+    fun provideSessionDao(database: AppDatabase): SessionDao {
+        return database.sessionDao()
     }
 }
