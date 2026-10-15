@@ -25,6 +25,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ivanb.trainingtracker.data.RegisterViewModel
+import com.ivanb.trainingtracker.ui.theme.Spacing
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -55,7 +56,7 @@ fun RegisterScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .padding(16.dp)
+                .padding(Spacing.l)
         ) {
             OutlinedTextField(
                 value = email,
@@ -63,7 +64,7 @@ fun RegisterScreen(
                 label = { Text("Email") },
                 modifier = Modifier.fillMaxWidth()
             )
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(Spacing.m))
             OutlinedTextField(
                 value = password,
                 onValueChange = viewModel::onPasswordChange,
@@ -74,11 +75,11 @@ fun RegisterScreen(
             )
 
             error?.let {
-                Spacer(modifier = Modifier.height(12.dp))
+                Spacer(modifier = Modifier.height(Spacing.m))
                 Text(it)
             }
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(Spacing.xl))
 
             if (isLoading) {
                 CircularProgressIndicator()

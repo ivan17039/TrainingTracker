@@ -32,9 +32,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ivanb.trainingtracker.data.WorkoutDetailViewModel
+import com.ivanb.trainingtracker.ui.theme.Spacing
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -141,7 +141,7 @@ fun WorkoutDetailScreen(
                 Text(
                     text = currentWorkout.dateMillis.toFormattedDate(),
                     style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                    modifier = Modifier.padding(horizontal = Spacing.l, vertical = Spacing.s)
                 )
                 // workout nije null → sad gledamo ima li vježbi
                 if (currentWorkout.exercises.isEmpty()) {
@@ -165,7 +165,7 @@ fun WorkoutDetailScreen(
                             Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                                    .padding(horizontal = Spacing.l, vertical = Spacing.s),
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Column(modifier = Modifier.weight(1f)) {

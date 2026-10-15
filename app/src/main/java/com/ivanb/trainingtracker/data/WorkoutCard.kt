@@ -20,29 +20,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.ivanb.trainingtracker.toFormattedDate
+import com.ivanb.trainingtracker.ui.theme.Spacing
 
 @Composable
-fun WorkoutCard(workout: Workout, modifier: Modifier = Modifier){
+fun WorkoutCard(workout: Workout, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .background(Color.LightGray).padding(16.dp)
+            .padding(horizontal = Spacing.l, vertical = Spacing.s)
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Row(verticalAlignment = Alignment.CenterVertically){
-                Text(text = workout.name, style = MaterialTheme.typography.titleMedium)
-                Spacer(modifier = Modifier.width(8.dp))
-                Icon(
-                    imageVector = Icons.Default.FitnessCenter,
-                    contentDescription = "Trening ikona"
-                )
-            }
-            Spacer(modifier = Modifier.height(4.dp))
+        Column(modifier = Modifier.padding(Spacing.l)) {
+            Text(text = workout.name, style = MaterialTheme.typography.titleMedium)
+            Spacer(modifier = Modifier.height(Spacing.xs))
             Text(text = workout.dateMillis.toFormattedDate(), style = MaterialTheme.typography.bodySmall)
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(Spacing.s))
             Text(text = "${workout.exercises.size} vježbi", style = MaterialTheme.typography.bodyMedium)
         }
-
     }
-
 }

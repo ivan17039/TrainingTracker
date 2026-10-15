@@ -32,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ivanb.trainingtracker.data.WorkoutFormViewModel
+import com.ivanb.trainingtracker.ui.theme.Spacing
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -71,7 +72,7 @@ fun WorkoutFormScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .padding(16.dp)
+                .padding(Spacing.l)
         ) {
             OutlinedTextField(
                 value = name,
@@ -83,7 +84,7 @@ fun WorkoutFormScreen(
                 },
                 modifier = Modifier.fillMaxWidth()
             )
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(Spacing.xl))
 
             OutlinedTextField(
                 value = dateMillis.toFormattedDate(),
@@ -97,7 +98,7 @@ fun WorkoutFormScreen(
                 },
                 modifier = Modifier.fillMaxWidth()
             )
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(Spacing.m))
             Button(
                 onClick = { viewModel.onSaveClick(onSaved) },
                 modifier = Modifier.fillMaxWidth()

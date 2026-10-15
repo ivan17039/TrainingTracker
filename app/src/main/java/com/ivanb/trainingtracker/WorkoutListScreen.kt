@@ -36,6 +36,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ivanb.trainingtracker.data.AccountViewModel
 import com.ivanb.trainingtracker.data.WorkoutCard
 import com.ivanb.trainingtracker.data.WorkoutListViewModel
+import com.ivanb.trainingtracker.ui.theme.Spacing
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -143,7 +144,7 @@ fun WorkoutListScreen(
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp),
+                    .padding(Spacing.l),
                 singleLine = true,
                 trailingIcon = {
                     if (searchQuery.isNotEmpty()) {
@@ -168,7 +169,7 @@ fun WorkoutListScreen(
                     } else {
                         "Nema rezultata za \"$searchQuery\""
                     },
-                    modifier = Modifier.padding(16.dp)
+                    modifier = Modifier.padding(Spacing.l)
                 )
             } else {
                 LazyColumn(

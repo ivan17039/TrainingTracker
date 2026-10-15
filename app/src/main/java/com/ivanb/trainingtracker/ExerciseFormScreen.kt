@@ -27,6 +27,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ivanb.trainingtracker.data.ExerciseFormViewModel
+import com.ivanb.trainingtracker.ui.theme.Spacing
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -68,7 +69,7 @@ fun ExerciseFormScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .padding(16.dp)
+                .padding(Spacing.l)
         ) {
             OutlinedTextField(
                 value = name,
@@ -76,7 +77,7 @@ fun ExerciseFormScreen(
                 label = { Text("Ime vježbe") },
                 modifier = Modifier.fillMaxWidth()
             )
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(Spacing.m))
 
             OutlinedTextField(
                 value = sets,
@@ -85,7 +86,7 @@ fun ExerciseFormScreen(
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 modifier = Modifier.fillMaxWidth()
             )
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(Spacing.m))
 
             OutlinedTextField(
                 value = reps,
@@ -94,7 +95,7 @@ fun ExerciseFormScreen(
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 modifier = Modifier.fillMaxWidth()
             )
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(Spacing.m))
 
             OutlinedTextField(
                 value = weight,
@@ -105,11 +106,11 @@ fun ExerciseFormScreen(
             )
 
             if (error != null) {
-                Spacer(modifier = Modifier.height(12.dp))
+                Spacer(modifier = Modifier.height(Spacing.m))
                 Text(text = error!!)
             }
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(Spacing.xl))
             Button(
                 onClick = { viewModel.onSaveClick(workoutId, onSaved) },
                 modifier = Modifier.fillMaxWidth()
